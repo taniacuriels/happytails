@@ -1,0 +1,42 @@
+# React Native
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# iOS
+ios/build/
+ios/Pods/
+*.xcworkspace/xcuserdata/
+*.xcworkspace/xcshareddata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+
+# Android
+android/app/build/
+android/build/
+*.iml
+*.hprof
+.cxx/
+*.keystore
+!debug.keystore
+
+# node_modules
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Metro
+.metro-health-check

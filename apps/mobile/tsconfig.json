@@ -1,9 +1,23 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "jsx": "react-native",
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "baseUrl": ".",
+    "paths": {
+      "@domain/*": ["../../packages/domain/src/*"],
+      "@messaging/*": ["../../packages/messaging/src/*"],
+      "@scheduling/*": ["../../packages/scheduling/src/*"],
+      "@notifications/*": ["../../packages/notifications/src/*"],
+      "@auth/*": ["../../packages/auth/src/*"],
+      "@design-tokens/*": ["../../packages/design-tokens/src/*"]
+    }
   },
-  "include": ["src"]
+  "include": [
+    "src/**/*",
+    "__tests__/**/*"
+  ],
+  "exclude": [
+    "android",
+    "ios",
+    "node_modules"
+  ]
 }

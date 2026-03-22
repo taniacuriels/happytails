@@ -1,6 +1,6 @@
 # Mobile App
 
-HappyTails mobile app for fosters, adopters, and on-call shelter staff.
+HappyTails mobile app built with vanilla React Native for fosters, adopters, and on-call staff.
 
 ## Features
 
@@ -13,24 +13,68 @@ HappyTails mobile app for fosters, adopters, and on-call shelter staff.
 
 ## Tech Stack
 
-- **React Native** - Mobile framework
-- **Expo** - Development platform
+- **React Native** - Mobile framework (vanilla, no Expo)
 - **TypeScript** - Type safety
-- **React Navigation** - Routing
+- **Metro** - Bundler
+- **React Navigation** - Routing (to be added)
 
 ## Development
 
-```bash
-npm run dev
-```
+### Prerequisites
 
-Choose your platform:
-- Press `i` for iOS
-- Press `a` for Android
-- Press `w` for web
+- Node.js 18+
+- React Native development environment
+- Xcode (for iOS development on macOS)
+- Android Studio (for Android development)
 
-## Building
+### Setup
 
 ```bash
-npm run build
+# Install dependencies
+npm install
+
+# For iOS (macOS only)
+cd ios && pod install && cd ..
+
+# Start Metro bundler
+npm start
 ```
+
+### Running on Device/Simulator
+
+```bash
+# iOS
+npm run ios
+
+# Android
+npm run android
+```
+
+## Building for Production
+
+### iOS
+Open `ios/HappyTails.xcworkspace` in Xcode and build/archive from there.
+
+### Android
+```bash
+cd android
+./gradlew assembleRelease
+```
+
+## Project Structure
+
+```
+mobile/
+├── src/                    # React Native source code
+│   └── App.tsx            # Main app component
+├── android/               # Android native code
+├── ios/                   # iOS native code
+├── index.js               # Entry point
+├── metro.config.js        # Metro bundler config
+├── babel.config.js        # Babel configuration
+└── tsconfig.json          # TypeScript configuration
+```
+
+## Notes
+
+This is a vanilla React Native project (not using Expo). You'll need to set up your development environment according to the [React Native documentation](https://reactnative.dev/docs/environment-setup).
