@@ -12,28 +12,29 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@happytails/domain": "file:../../packages/domain",
-    "@happytails/messaging": "file:../../packages/messaging",
-    "@happytails/scheduling": "file:../../packages/scheduling",
-    "@happytails/notifications": "file:../../packages/notifications",
     "@happytails/auth": "file:../../packages/auth",
     "@happytails/design-tokens": "file:../../packages/design-tokens",
+    "@happytails/domain": "file:../../packages/domain",
+    "@happytails/messaging": "file:../../packages/messaging",
+    "@happytails/notifications": "file:../../packages/notifications",
+    "@happytails/scheduling": "file:../../packages/scheduling",
     "react": "18.2.0",
-    "react-native": "0.73.6"
+    "react-native": "^0.73.11"
   },
   "devDependencies": {
-    "@types/react": "^18.2.0",
-    "@types/react-native": "^0.73.0",
-    "@types/node": "^20.0.0",
-    "typescript": "^5.0.0",
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
     "@react-native/babel-preset": "^0.73.0",
     "@react-native/eslint-config": "^0.73.0",
+    "@react-native/gradle-plugin": "^0.73.4",
     "@react-native/metro-config": "^0.73.0",
-    "@react-native/typescript-config": "^0.73.0",
-    "eslint": "^8.19.0"
+    "@react-native/typescript-config": "^0.73.1",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-native": "^0.73.0",
+    "eslint": "^8.19.0",
+    "typescript": "^5.0.0"
   },
   "engines": {
     "node": ">=18"
