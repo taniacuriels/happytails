@@ -22,15 +22,15 @@
     "resolveJsonModule": true,
     "moduleResolution": "bundler",
     "isolatedModules": true,
-    "baseUrl": ".",
-    "paths": {
-      "@domain/*": ["packages/domain/src/*"],
-      "@messaging/*": ["packages/messaging/src/*"],
-      "@scheduling/*": ["packages/scheduling/src/*"],
-      "@notifications/*": ["packages/notifications/src/*"],
-      "@auth/*": ["packages/auth/src/*"],
-      "@design-tokens/*": ["packages/design-tokens/src/*"]
-    }
+    // "baseUrl": ".",
+    // "paths": {
+    //   "@domain/*": ["packages/domain/src/*"],
+    //   "@messaging/*": ["packages/messaging/src/*"],
+    //   "@scheduling/*": ["packages/scheduling/src/*"],
+    //   "@notifications/*": ["packages/notifications/src/*"],
+    //   "@auth/*": ["packages/auth/src/*"],
+    //   "@design-tokens/*": ["packages/design-tokens/src/*"]
+    // }
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["**/node_modules"]

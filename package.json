@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "description": "Shelter Communication Platform for coordinating animal rescue and adoption",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "dev": "npm run dev --workspaces",
     "build": "npm run build --workspaces",
