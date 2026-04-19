@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "npm run dev --workspaces",
     "build": "npm run build --workspaces",
+    "build:packages": "npm run build --workspace=@happytails/auth --workspace=@happytails/domain --workspace=@happytails/design-tokens --workspace=@happytails/messaging --workspace=@happytails/scheduling --workspace=@happytails/notifications",
     "test": "npm run test --workspaces",
     "test:watch": "npm run test:watch --workspaces",
     "lint": "npm run lint --workspaces",

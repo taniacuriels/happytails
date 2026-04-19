@@ -37,18 +37,33 @@ npm run build
 ## Project Structure
 
 ```
-repo/
+happytails/
 ├─ apps/
-│  ├─ mobile/        # React Native app
+│  ├─ mobile/        # React Native app (iOS/Android)
+│  │  ├─ src/
+│  │  │  ├─ components/   # Reusable UI components
+│  │  │  ├─ hooks/        # Custom React hooks
+│  │  │  ├─ navigation/   # Navigation configuration
+│  │  │  ├─ reducers/     # State management reducers
+│  │  │  ├─ redux/        # Redux store & middleware
+│  │  │  ├─ screens/      # Screen components
+│  │  │  ├─ types/        # TypeScript type definitions
+│  │  │  └─ utilities/    # Helper functions
+│  │  ├─ android/         # Android native code
+│  │  └─ ios/             # iOS native code
 │  └─ web/           # Next.js web app
+│     ├─ app/        # Next.js App Router pages
+│     └─ src/        # Source code
 ├─ packages/
-│  ├─ domain/        # Business logic & rules
-│  ├─ messaging/     # Communication engine
-│  ├─ scheduling/    # Timeline & appointment management
-│  ├─ notifications/ # Alert & notification system
-│  ├─ auth/          # Authentication
-│  └─ design-tokens/ # Design system
+│  ├─ domain/        # Business logic, roles, permissions
+│  ├─ messaging/     # Threads, events, moderation
+│  ├─ scheduling/    # Timelines, appointments, conflicts
+│  ├─ notifications/ # Triggers and preferences
+│  ├─ auth/          # Authentication & authorization
+│  └─ design-tokens/ # Colors, spacing, typography
 ├─ docs/             # Architecture & design docs
+│  ├─ diagrams/      # Architecture diagrams
+│  └─ *.md           # Documentation files
 └─ package.json
 ```
 

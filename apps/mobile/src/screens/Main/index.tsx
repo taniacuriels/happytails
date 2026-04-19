@@ -1,5 +1,6 @@
 import { Text, View } from 'react-native';
 import { useStyles } from './styles';
+import MessagingDemo from '../../components/MessagingDemo';
 
 export const Main = () => {
     const styles = useStyles();
@@ -14,6 +15,7 @@ export const Main = () => {
                 </Text>
             </View>
             
+            <MessagingDemo />
         </View>
     );
 };
