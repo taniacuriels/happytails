@@ -1,114 +1,110 @@
 /**
  * POC: Using shared auth package in mobile app
+ * Login form with email and password inputs
  */
 
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
-import { authService, createToken, verifyToken, TOKEN_EXPIRY } from '@happytails/auth';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, TextInput } from 'react-native';
+import { authService } from '@happytails/auth';
 
 export default function AuthTest() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
 
-  const testLogin = async () => {
+  const handleLogin = async () => {
+    if (!email || !password) {
+      setError('Please enter both email and password');
+      Alert.alert('Error', 'Please enter both email and password');
+      return;
+    }
+    
     setLoading(true);
     setResult('');
     setError('');
     
     try {
-      // Test login
-      const loginResult = await authService.login('foster@example.com', 'foster123');
-      setResult(`✅ Login successful!\nUser: ${loginResult.user.name}\nRole: ${loginResult.user.role}`);
-      
-      // Test verify
-      const user = await authService.verify(loginResult.accessToken);
-      console.log('Verified user:', user);
-      
-      // Test token creation
-      const testToken = createToken({
-        sub: 'test-user',
-        email: 'test@example.com',
-        role: 'foster' as any,
-      });
-      console.log('Created test token:', testToken);
-      
-      // Test token verification
-      const payload = verifyToken(testToken);
-      console.log('Token payload:', payload);
-      
-      Alert.alert('Success', 'Auth package working! Check console for details.');
+      const loginResult = await authService.login(email, password);
+      setResult(`✅ Login successful!\nUser: ${loginResult.user.name}\nRole: ${loginResult.user.role}\nEmail: ${loginResult.user.email}`);
+      Alert.alert('Success', `Welcome ${loginResult.user.name}!`);
     } catch (e: any) {
-      setError(`❌ Error: ${e.message || e.code || JSON.stringify(e)}`);
-      Alert.alert('Error', e.message || 'Login failed');
+      const errorMsg = e.message || e.code || 'Login failed';
+      setError(`❌ Error: ${errorMsg}`);
+      Alert.alert('Error', errorMsg);
     } finally {
       setLoading(false);
     }
   };
 
-  const testInvalidLogin = async () => {
-    setLoading(true);
+  const handleClear = () => {
+    setEmail('');
+    setPassword('');
     setResult('');
     setError('');
-    
-    try {
-      await authService.login('foster@example.com', 'wrongpassword');
-      setError('❌ Should have thrown an error');
-    } catch (e: any) {
-      setResult(`✅ Correctly rejected invalid credentials\nError: ${e.code}`);
-      Alert.alert('Success', 'Invalid credentials properly rejected');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const testAdminLogin = async () => {
-    setLoading(true);
-    setResult('');
-    setError('');
-    
-    try {
-      const loginResult = await authService.login('admin@shelter.org', 'admin123');
-      setResult(`✅ Admin Login!\nUser: ${loginResult.user.name}\nRole: ${loginResult.user.role}`);
-      Alert.alert('Success', 'Admin login successful!');
-    } catch (e: any) {
-      setError(`❌ Error: ${e.message}`);
-      Alert.alert('Error', e.message);
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Auth Package Test</Text>
-      <Text style={styles.subtitle}>Testing @happytails/auth in React Native</Text>
+      <Text style={styles.title}>🔐 Login</Text>
       
-      {loading && <ActivityIndicator size="large" color="#0070f3" />}
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Enter your email"
+          placeholderTextColor="#999"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          autoCorrect={false}
+        />
+      </View>
       
-      <TouchableOpacity 
-        style={[styles.button, styles.primaryButton]}
-        onPress={testLogin}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>Test Foster Login</Text>
-      </TouchableOpacity>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Password</Text>
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Enter your password"
+            placeholderTextColor="#999"
+            secureTextEntry={!showPassword}
+          />
+          <TouchableOpacity 
+            style={styles.eyeButton}
+            onPress={() => setShowPassword(!showPassword)}
+          >
+            <Text style={styles.eyeText}>{showPassword ? '🙈' : '👁️'}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       
-      <TouchableOpacity 
-        style={[styles.button, styles.secondaryButton]}
-        onPress={testAdminLogin}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>Test Admin Login</Text>
-      </TouchableOpacity>
-      
-      <TouchableOpacity 
-        style={[styles.button, styles.dangerButton]}
-        onPress={testInvalidLogin}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>Test Invalid Credentials</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonRow}>
+        <TouchableOpacity 
+          style={[styles.button, styles.primaryButton]}
+          onPress={handleLogin}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Login</Text>
+          )}
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={[styles.button, styles.secondaryButton]}
+          onPress={handleClear}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>Clear</Text>
+        </TouchableOpacity>
+      </View>
       
       {result ? (
         <View style={styles.resultBox}>
@@ -122,74 +118,124 @@ export default function AuthTest() {
         </View>
       ) : null}
       
-      <Text style={styles.hint}>
-        Token expiry: {TOKEN_EXPIRY.ACCESS / 1000 / 60}min access, {TOKEN_EXPIRY.REFRESH / 1000 / 60 / 60 / 24}days refresh
-      </Text>
+      <View style={styles.helpBox}>
+        <Text style={styles.helpTitle}>Test Credentials:</Text>
+        <Text style={styles.helpText}>• Foster: foster@example.com / foster123</Text>
+        <Text style={styles.helpText}>• Admin: admin@shelter.org / admin123</Text>
+        <Text style={styles.helpText}>• Adopter: adopter@example.com / adopter123</Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    margin: 20,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
+    padding: 16,
     backgroundColor: '#fff',
+    borderRadius: 8,
+    margin: 8,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#666',
     marginBottom: 16,
+    textAlign: 'center',
+  },
+  inputContainer: {
+    marginBottom: 12,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 4,
+    color: '#333',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    padding: 10,
+    fontSize: 16,
+    backgroundColor: '#f9f9f9',
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  passwordInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    padding: 10,
+    fontSize: 16,
+    backgroundColor: '#f9f9f9',
+  },
+  eyeButton: {
+    position: 'absolute',
+    right: 10,
+    padding: 5,
+  },
+  eyeText: {
+    fontSize: 18,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 8,
   },
   button: {
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    flex: 1,
+    padding: 12,
     borderRadius: 4,
     alignItems: 'center',
-    marginBottom: 10,
+    marginHorizontal: 4,
   },
   primaryButton: {
     backgroundColor: '#22c55e',
   },
   secondaryButton: {
-    backgroundColor: '#0070f3',
-  },
-  dangerButton: {
-    backgroundColor: '#ef4444',
+    backgroundColor: '#6b7280',
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: 'bold',
   },
   resultBox: {
-    marginTop: 16,
-    padding: 12,
-    backgroundColor: '#dcfce7',
+    marginTop: 12,
+    padding: 10,
+    backgroundColor: '#d1fae5',
     borderRadius: 4,
   },
   resultText: {
-    color: '#166534',
     fontSize: 14,
+    fontFamily: 'monospace',
+    color: '#065f46',
   },
   errorBox: {
     backgroundColor: '#fee2e2',
   },
   errorText: {
-    color: '#991b1b',
     fontSize: 14,
+    fontFamily: 'monospace',
+    color: '#991b1b',
   },
-  hint: {
+  helpBox: {
     marginTop: 16,
+    padding: 10,
+    backgroundColor: '#f3f4f6',
+    borderRadius: 4,
+  },
+  helpTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginBottom: 4,
+    color: '#666',
+  },
+  helpText: {
     fontSize: 12,
     color: '#666',
-    textAlign: 'center',
+    marginBottom: 2,
   },
 });
