@@ -1,9 +1,8 @@
 /**
- * Placeholder for authentication
+ * Auth Service Interface
+ * 
+ * @deprecated Use the implementation from './service' instead
  */
 
-export interface AuthService {
-  login(email: string, password: string): Promise<string>;
-  logout(token: string): Promise<void>;
-  verify(token: string): Promise<any>;
-}
+export { HappyTailsAuthService, authService, createAuthService } from './service';
+export type { AuthService } from './types';

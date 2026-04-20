@@ -1,9 +1,8 @@
 /**
- * Placeholder for session management
+ * Session Service Interface
+ * 
+ * @deprecated Use the implementation from './sessionService' instead
  */
 
-export interface SessionService {
-  createSession(userId: string): Promise<string>;
-  getSession(sessionId: string): Promise<any>;
-  invalidateSession(sessionId: string): Promise<void>;
-}
+export { HappyTailsSessionService, sessionService, createSessionService } from './sessionService';
+export type { SessionService } from './types';

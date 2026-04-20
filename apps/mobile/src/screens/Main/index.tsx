@@ -1,6 +1,7 @@
 import { Text, View } from 'react-native';
 import { useStyles } from './styles';
 import MessagingDemo from '../../components/MessagingDemo';
+import AuthTest from '../../components/AuthTest';
 
 export const Main = () => {
     const styles = useStyles();
@@ -15,6 +16,7 @@ export const Main = () => {
                 </Text>
             </View>
             
+            <AuthTest />
             <MessagingDemo />
         </View>
     );
